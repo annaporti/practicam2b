@@ -1,0 +1,70 @@
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title>Mapbox Cementerio</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css' rel='stylesheet' />
+    <script
+        src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.0/mapbox-gl-geocoder.min.js'></script>
+    <link rel='stylesheet'
+        href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.0/mapbox-gl-geocoder.css'
+        type='text/css' />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%
+        }
+
+        .popup-text {
+            font-size: 20px;
+            font-weight: bold;
+            font-family: verdana;
+            color: #8A0808;
+        }
+    </style>
+    <script>
+
+        function init() {
+            mapboxgl.accessToken =
+                'pk.eyJ1IjoiYW5uYXBvcnRpIiwiYSI6ImNqcmpqdm5oNjBjZGs0M2x4bW5zMWw3NGMifQ.9kWUs3fzfDZ_391Jt1ZpvQ';
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/annaporti/cjsc2k1rp1myc1fpkp4rc6lu2',
+                center: [2.838, 41.973],
+                hash: true,
+                pitch: 60,
+                bearing: 28,
+                zoom: 16,
+                attributionControl: false
+            });
+            map.addControl(new mapboxgl.AttributionControl({ compact: true }));
+            map.addControl(new mapboxgl.NavigationControl());
+            map.addControl(new MapboxGeocoder({
+                accessToken: mapboxgl.accessToken
+            }));
+
+
+  
+  var popup = new mapboxgl.Popup({closeOnClick: false})
+.setLngLat([2.839, 41.973])
+.setHTML('<p class="popup-text"> Cementiri de Girona </p>')
+.addTo(map);
+}
+    </script>
+</head>
+
+<body onload="init()">
+    <div id="map"></div>
+</body>
+
+</html>

@@ -1,0 +1,419 @@
+<html lang="es">
+
+<head>
+    <title>Natur- und Kulturerbe des Landes Salzburg</title>
+    <link rel="shortcut icon" href="images/flag.png" type="png" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="autor" />
+    <meta name="description" content="descripción página">
+    <meta name="robots" content="index,follow">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+    <script>
+        L_PREFER_CANVAS = true;
+    </script>
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+    <script src="https://calvinmetcalf.github.io/leaflet-ajax/dist/leaflet.ajax.js"></script>
+    <script src="https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.js"></script>
+    <link rel="stylesheet" href="https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.css" />
+    <style>
+        body {
+            margin: 0 0 100px 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .header {
+            background-color: #000;
+            color: #fff;
+            padding-top: 5px;
+            border-top: 3px solid #000000;
+            border-bottom: 3px solid #000000;
+            width: 100%;
+            height: 85px;
+            top: 0;
+            left: 0;
+        }
+
+        .title {
+            text-align: left;
+            color: #fff;
+        }
+
+        .link-title {
+            color: #fff;
+        }
+
+        .flag {
+            text-align: right;
+            margin: 0;
+            padding: 0;
+        }
+
+        .flag-img {
+            border: 3px solid #000;
+            border-bottom: none;
+            border-right: none;
+            top: -131px;
+            width: 140px;
+            height: 90px;
+            position: relative;
+        }
+
+
+        h1 {
+            color: black;
+            font-size: 30px;
+            margin-top: 10px;
+            margin-left: 30px;
+            padding: 10px;
+        }
+
+        h2 {
+            color: black;
+            font-size: 16px;
+            text-align: center;
+            padding: 2px;
+        }
+
+        p {
+            font-size: 12px;
+            text-align: center;
+            color: black
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        .gemeinden {
+            border-top: 2px solid #000000;
+            border-bottom: 2px solid #000000;
+        }
+
+        .burgenundschloesser {
+            border-top: 2px solid #FF8000;
+            border-bottom: 2px solid #FF8000;
+        }
+
+        .museen {
+            border-top: 2px solid #FFFF00;
+            border-bottom: 2px solid #FFFF00;
+        }
+
+        .mountainbikestrecken {
+            border-top: 2px solid #000000;
+            border-bottom: 2px solid #000000;
+        }
+
+
+        .naturparke {
+            border-top: 2px solid #0B610B;
+            border-bottom: 2px solid #0B610B;
+        }
+
+        .seen {
+            border-top: 2px solid #0080FF;
+            border-bottom: 2px solid #0080FF;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+            border-bottom: 3px solid #000000;
+        }
+    </style>
+    <script>
+        var map, capa1, capa2, terreno;
+        var geojson, salzburgerland, gemeinden, burgenundschloesser, museen, naturparke, seen;
+        var mountainbikestrecken;
+        var controlCapas
+
+
+        function init() {
+            map = L.map("map", {
+                center: [47.4948014, 13.032214, 9],
+                zoom: 8
+            });
+            capa1 = L.tileLayer(
+                'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+                    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap,iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, EsriChina (Hong Kong), and the GIS User Community'
+                }).addTo(map);
+
+            capa2 = L.tileLayer(
+                'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX,GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+                });
+
+            terreno =
+                L.tileLayer('http://{s}.tile.stamen.com/terrain-background/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: 'Stamen terrain',
+                    opacity: 0.5
+                }).addTo(map);
+
+
+            salzburgerland = new L.GeoJSON.AJAX('datos/salzburgerland.geojson', {
+                style: function (feature) {
+                    return {
+                        "color": "#000000",
+                        "weight": 3,
+                        "opacity": 1,
+                        "fillOpacity": 0.1
+                    };
+                },
+            })
+
+            gemeinden = new L.GeoJSON.AJAX('datos/gemeinden.geojson', {
+                style: function (feature) {
+                    return {
+                        "color": "#000000",
+                        "weight": 1,
+                        "opacity": 1,
+                        "fillOpacity": 0
+                    };
+                },
+                onEachFeature: function (feature, layer) {
+                    popupContentPol = "<h2 class='gemeinden'> Gemeinden </h2>"
+                        + "<p><strong>Name: </strong>" + feature.properties.NAME + "</p>"
+                    layer.bindPopup(popupContentPol);
+                },
+
+            })
+
+
+            burgenundschloesser = new L.GeoJSON.AJAX('datos/burgenundschloesser.geojson', {
+
+                onEachFeature: function (feature, layer) {
+                    popupContent = "<h2 class='burgenundschloesser'> Burgen und Schlösser </h2>"
+                        + "<p><strong>Name: </strong>" + feature.properties.NAME + "</p>"
+                        + "<p><a target='_blank' href='" + feature.properties.DBLink + "'>Weitere Informationen</a></p>";
+                    layer.bindPopup(popupContent);
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight,
+                    });
+                },
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng, {
+                        radius: 7,
+                        fillColor: "#FF8000",
+                        color: "#ffffff",
+                        weight: 1,
+                        opacity: 0.7,
+                        fillOpacity: 1
+                    });
+                }
+
+            }).addTo(map);
+
+            museen = new L.GeoJSON.AJAX('datos/museen.geojson', {
+
+                onEachFeature: function (feature, layer) {
+                    popupContent = "<h2 class='museen'> Museen </h2>"
+                        + "<p><strong>Name: </strong>" + feature.properties.NAME + "</p>"
+                        + "<p><a target='_blank' href='" + feature.properties.Link + "'>Weitere Informationen</a></p>";
+                    layer.bindPopup(popupContent);
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight,
+                    });
+                },
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng, {
+                        radius: 7,
+                        fillColor: "#FFFF00",
+                        color: "#ffffff",
+                        weight: 1,
+                        opacity: 0.7,
+                        fillOpacity: 1
+                    });
+                }
+
+            }).addTo(map);
+
+            naturparke = new L.GeoJSON.AJAX('datos/naturparke.geojson', {
+                style: function (feature) {
+                    return {
+                        "color": "#0B610B",
+                        "weight": 2,
+                        "opacity": 1,
+                        "fillOpacity": 0.5
+                    };
+                },
+                onEachFeature: function (feature, layer) {
+                    popupContentPol = "<h2 class='naturparke'> Naturparke </h2>"
+                        + "<p><strong>Name: </strong>" + feature.properties.NAME + "</p>"
+                        + "<p><a target='_blank' href='" + feature.properties.Link + "'>Weitere Informationen</a></p>";
+
+                    layer.bindPopup(popupContentPol);
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight,
+                        click: zoomToFeature
+                    });
+                },
+
+            }).addTo(map);
+
+            seen = new L.GeoJSON.AJAX('datos/seen.geojson', {
+                style: function (feature) {
+                    return {
+                        "color": "#0080FF",
+                        "weight": 2,
+                        "opacity": 1,
+                        "fillOpacity": 0.5
+                    };
+                },
+                onEachFeature: function (feature, layer) {
+                    popupContentPol = "<h2 class='seen'> Seen </h2>"
+                        + "<p><strong>Name: </strong>" + feature.properties.NAME + "</p>"
+                        + "<p><a target='_blank' href='" + feature.properties.Link + "'>Weitere Informationen</a></p>";
+                    layer.bindPopup(popupContentPol);
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight,
+                        click: zoomToFeature
+                    });
+                },
+
+            }).addTo(map);
+
+
+
+
+            function getColor(d) {
+                return d == "Leicht" ? 'green' :
+                    d == "Mittel" ? 'blue' :
+                        d == "Schwer" ? 'red' :
+                            '#000000';
+            };
+           
+            
+        
+
+            function styleLines(feature) {
+                return {
+                    color: getColor(feature.properties.Schwgrad),
+                    weight: 2,
+                    opacity: 1,
+                }
+                
+                
+            };
+
+            function onEachFeature(feature, layer) {
+                {
+                    popupContentL = "<h2 class='mountainbikestrecken'> Mountainbike Strecken </h2>"
+                        + "<p><strong>Name: </strong>" + feature.properties.NAME + "</p>"
+                        + "<p><strong>Schwgrad: </strong>" + feature.properties.Schwgrad + "</p>"
+                    layer.bindPopup(popupContentL);
+                };
+                layer.on({
+                    mouseover: highlightFeature,
+                    mouseout: resetHighlight,
+                    click: zoomToFeature
+                });
+            }            
+
+
+            var mountainbikestrecken = new L.GeoJSON.AJAX('datos/mountainbikestrecken.geojson', {
+                style: styleLines,
+                onEachFeature: onEachFeature,
+            }).addTo(map);
+            
+            
+
+            function highlightFeature(e) {
+                var highlight = e.target;
+
+                highlight.setStyle({
+                    weight: 5,
+                    color: '#666',
+                    dashArray: '',
+                    fillOpacity: 0.7
+                });
+            }
+
+            function resetHighlight(e) {
+                burgenundschloesser.resetStyle(e.target);
+                museen.resetStyle(e.target);
+                naturparke.resetStyle(e.target);
+                seen.resetStyle(e.target);
+                mountainbikestrecken.resetStyle(e.target);
+
+            }
+
+            function zoomToFeature(e) {
+                map.fitBounds(e.target.getBounds());
+            }
+
+
+
+            var baseMaps = {
+                "Map": capa1,
+                "Foto": capa2
+            };
+            var overlayMaps = {
+                "Terrain": terreno,
+                "Salzburgerland": salzburgerland,
+                "Gemeinden": gemeinden,
+                "Naturparke": naturparke,
+                "Seen": seen,
+                "Burgen und Schlösser": burgenundschloesser,
+                "Museen": museen,
+                "Mountainbike Strecken": mountainbikestrecken
+
+            };
+
+
+            controlCapas = L.control.layers(baseMaps, overlayMaps, { collapsed: false });
+            controlCapas.addTo(map);
+
+            var layersGroup = new L.featureGroup([seen, naturparke, museen, gemeinden, burgenundschloesser, mountainbikestrecken]);
+
+            var searchControl = new L.Control.Search({
+                layer: layersGroup,
+                propertyName: 'NAME',
+                position: 'topright',
+                marker: {
+                    icon: new L.Icon({ iconUrl: 'img/geosearch.png', iconSize: [40, 40] }),
+                    circle: {
+                        radius: 20,
+                        color: '#0a0',
+                        opacity: 1
+                    }
+                },
+                moveToLocation: function (latlng) {
+
+                    map.setView(latlng, 12);
+                }
+            });
+
+            map.addControl(searchControl);
+
+            var controlEscala = new L.control.scale({ position: 'bottomleft' });
+
+            map.addControl(controlEscala);
+        }
+
+    </script>
+</head>
+
+<body onLoad="init()">
+    <div class="header">
+        <h1 class="title">Natur- und Kulturerbe des Landes Salzburg
+            <p class="title">
+                Source: <a class="link-title" target='_blank'
+                    href="https://www.salzburg.gv.at/themen/statistik/ogd/">Land Salzburg Open Goverment Data </a></p>
+        </h1>
+        <p class="flag"><img src="images/flag.png" class="flag-img"></p>
+    </div>
+
+    <div id="map"></div>
+    <div class="legend"></div>
+</body>
+
+</html>
