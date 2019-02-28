@@ -191,10 +191,7 @@
                         + "<p><strong>Name: </strong>" + feature.properties.NAME + "</p>"
                         + "<p><a target='_blank' href='" + feature.properties.DBLink + "'>Weitere Informationen</a></p>";
                     layer.bindPopup(popupContent);
-                    layer.on({
-                        mouseover: highlightFeature,
-                        mouseout: resetHighlight,
-                    });
+                  
                 },
                 pointToLayer: function (feature, latlng) {
                     return L.circleMarker(latlng, {
@@ -216,10 +213,7 @@
                         + "<p><strong>Name: </strong>" + feature.properties.NAME + "</p>"
                         + "<p><a target='_blank' href='" + feature.properties.Link + "'>Weitere Informationen</a></p>";
                     layer.bindPopup(popupContent);
-                    layer.on({
-                        mouseover: highlightFeature,
-                        mouseout: resetHighlight,
-                    });
+               
                 },
                 pointToLayer: function (feature, latlng) {
                     return L.circleMarker(latlng, {
@@ -249,11 +243,7 @@
                         + "<p><a target='_blank' href='" + feature.properties.Link + "'>Weitere Informationen</a></p>";
 
                     layer.bindPopup(popupContentPol);
-                    layer.on({
-                        mouseover: highlightFeature,
-                        mouseout: resetHighlight,
-                        click: zoomToFeature
-                    });
+                 
                 },
 
             }).addTo(map);
@@ -272,11 +262,7 @@
                         + "<p><strong>Name: </strong>" + feature.properties.NAME + "</p>"
                         + "<p><a target='_blank' href='" + feature.properties.Link + "'>Weitere Informationen</a></p>";
                     layer.bindPopup(popupContentPol);
-                    layer.on({
-                        mouseover: highlightFeature,
-                        mouseout: resetHighlight,
-                        click: zoomToFeature
-                    });
+                  
                 },
 
             }).addTo(map);
@@ -311,11 +297,7 @@
                         + "<p><strong>Schwgrad: </strong>" + feature.properties.Schwgrad + "</p>"
                     layer.bindPopup(popupContentL);
                 };
-                layer.on({
-                    mouseover: highlightFeature,
-                    mouseout: resetHighlight,
-                    click: zoomToFeature
-                });
+                
             }            
 
 
@@ -326,29 +308,7 @@
             
             
 
-            function highlightFeature(e) {
-                var highlight = e.target;
-
-                highlight.setStyle({
-                    weight: 5,
-                    color: '#666',
-                    dashArray: '',
-                    fillOpacity: 0.7
-                });
-            }
-
-            function resetHighlight(e) {
-                burgenundschloesser.resetStyle(e.target);
-                museen.resetStyle(e.target);
-                naturparke.resetStyle(e.target);
-                seen.resetStyle(e.target);
-                mountainbikestrecken.resetStyle(e.target);
-
-            }
-
-            function zoomToFeature(e) {
-                map.fitBounds(e.target.getBounds());
-            }
+              
 
 
 
