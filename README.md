@@ -1,2 +1,2 @@
 # practicam2b
-Pràctica m2a
+Pràctica m2b
