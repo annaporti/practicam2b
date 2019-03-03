@@ -1,10 +1,10 @@
 # Pràctica m2b
 
-A l’índex d’aquest repositori _Practicam2b_ hi ha dos enllaços a les dues parts de la pràctica.
+A l’[índex](https://annaporti.github.io/practicam2b/) d’aquest repositori, [Practicam2b](https://github.com/annaporti/practicam2b), hi ha dos enllaços a les dues parts de la pràctica.
 
 ## Pràctica Leaflet: _Natur- und Kulturerbe des Landes Salzburg_
 
-És el visor _Leaflet_ principal, el qual consisteix en una recopil•lació de diferents elements del patrimoni natural i cultural de la província de Salzburg (Àustria):
+És el visor amb _Leaflet_ principal, el qual consisteix en una recopil•lació de diferents elements del patrimoni natural i cultural de la província de Salzburg (Àustria):
 * **Municipis** (_Gemeinden_).
 * **Parcs Naturals** (_Naturparke_).
 * **Llacs** (_Seen_).
@@ -16,7 +16,7 @@ A l’índex d’aquest repositori _Practicam2b_ hi ha dos enllaços a les dues 
 
 Les dades són diferents capes d’informació en format _geoJSON_, llistades al control de capes, que corresponen als diferents elements del patrimoni natural i cultural de la província.
 
-També s’ha afegit un cercador, que pot cercar qualsevol element de les capes que formen el visor, i finestres informatives a cada un d’aquests, amb un enllaç a la informació proporcionada sobre cada element per la mateixa font d’informació. Excepte en el cas de les Rutes de Bicicleta de Muntanya, que en comptes de tenir un enllaç amb informació, indiquen el nivell de dificultat del tram, que pot ser:
+També s’ha afegit un cercador, que pot cercar qualsevol element de les capes que formen el visor, i finestres informatives a cada un d’aquests, amb un enllaç extern a la informació proporcionada sobre cada element per la mateixa font d’informació. Excepte en el cas de les Rutes de Bicicleta de Muntanya (_Mountainbike Strecken_), que en comptes de tenir un enllaç amb informació, indiquen el nivell de dificultat del tram (_Schwgrad_) d'aquestes, que pot ser:
 * **Fàcil** (_Leicht_), de color verd.
 * **Mitjana** (_Mittel_), de color blau.
 * **Difícil** (_Schwer_), de color vermell.
