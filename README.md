@@ -1,4 +1,4 @@
-# practicam2b
+# Pràctica m2b
 
 A l’índex d’aquest repositori _Practicam2b_ hi ha dos enllaços a les dues parts de la pràctica.
 
