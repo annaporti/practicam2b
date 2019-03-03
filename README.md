@@ -18,7 +18,7 @@ Les dades són diferents capes d’informació en format _geoJSON_, llistades al
 
 També s’ha afegit un cercador, que pot cercar qualsevol element de les capes que formen el visor, i finestres informatives a cada un d’aquests, amb un enllaç extern a la informació proporcionada sobre cada element per la mateixa font d’informació. Excepte en el cas de les Rutes de Bicicleta de Muntanya (_Mountainbike Strecken_), que en comptes de tenir un enllaç amb informació, indiquen el nivell de dificultat del tram (_Schwgrad_) d'aquestes, que pot ser:
 * **Fàcil** (_Leicht_), de color verd.
-* **Mitjana** (_Mittel_), de color blau.
+* **Mitjà** (_Mittel_), de color blau.
 * **Difícil** (_Schwer_), de color vermell.
 
 ## Pràctica Mapbox: _Cementiri_
