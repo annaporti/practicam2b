@@ -62,7 +62,6 @@
             position: relative;
         }
 
-
         h1 {
             color: black;
             font-size: 30px;
@@ -108,7 +107,6 @@
             border-bottom: 2px solid #000000;
         }
 
-
         .naturparke {
             border-top: 2px solid #0B610B;
             border-bottom: 2px solid #0B610B;
@@ -127,10 +125,9 @@
     </style>
     <script>
         var map, capa1, capa2, terreno;
-        var geojson, salzburgerland, gemeinden, burgenundschloesser, museen, naturparke, seen;
+        var salzburgerland, gemeinden, burgenundschloesser, museen, naturparke, seen;
         var mountainbikestrecken;
         var controlCapas
-
 
         function init() {
             map = L.map("map", {
@@ -153,7 +150,6 @@
                     attribution: 'Stamen terrain',
                     opacity: 0.5
                 }).addTo(map);
-
 
             salzburgerland = new L.GeoJSON.AJAX('datos/salzburgerland.geojson', {
                 style: function (feature) {
@@ -182,12 +178,11 @@
                     layer.on({
                         mouseover: highlightFeature,
                         mouseout: resetHighlight,
-                    
+
                     });
                 },
 
-            })
-
+            }).addTo(map);
 
             burgenundschloesser = new L.GeoJSON.AJAX('datos/burgenundschloesser.geojson', {
 
@@ -257,13 +252,11 @@
                     layer.on({
                         mouseover: highlightFeature,
                         mouseout: resetHighlight,
-                    
+
                     });
                 },
 
             }).addTo(map);
-
-
 
             seen = new L.GeoJSON.AJAX('datos/seen.geojson', {
                 style: function (feature) {
@@ -274,11 +267,6 @@
                         "fillOpacity": 0.5
                     };
                 },
-
-                
-
-
-
                 onEachFeature: function (feature, layer) {
                     popupContentPol = "<h2 class='seen'> Seen </h2>"
                         + "<p><strong>Name: </strong>" + feature.properties.NAME + "</p>"
@@ -292,19 +280,12 @@
 
             }).addTo(map);
 
-
-
-
             function getColor(d) {
                 return d == "Leicht" ? 'green' :
                     d == "Mittel" ? 'blue' :
                         d == "Schwer" ? 'red' :
-                            '#000000';                   
-            } 
-
-           
-           
-        
+                            '#000000';
+            }
 
             function styleLines(feature) {
                 return {
@@ -312,9 +293,6 @@
                     weight: 1.5,
                     opacity: 1,
                 }
-               
-                
-                
             };
 
             function onEachFeature(feature, layer) {
@@ -327,17 +305,14 @@
                 layer.on({
                     mouseover: highlightFeature,
                     mouseout: resetHighlight,
-         
-                });
-            }            
 
+                });
+            }
 
             var mountainbikestrecken = new L.GeoJSON.AJAX('datos/mountainbikestrecken.geojson', {
                 style: styleLines,
                 onEachFeature: onEachFeature,
             }).addTo(map);
-            
-            
 
             function highlightFeature(e) {
                 var highlight = e.target;
@@ -357,11 +332,7 @@
                 naturparke.resetStyle(e.target);
                 seen.resetStyle(e.target);
                 mountainbikestrecken.resetStyle(e.target);
-
             }
-
-          
-
 
             var baseMaps = {
                 "Map": capa1,
@@ -378,7 +349,6 @@
                 "Mountainbike Strecken": mountainbikestrecken
 
             };
-
 
             controlCapas = L.control.layers(baseMaps, overlayMaps, { collapsed: false });
             controlCapas.addTo(map);
@@ -418,13 +388,12 @@
         <h1 class="title">Natur- und Kulturerbe des Landes Salzburg
             <p class="title">
                 Source: <a class="link-title" target='_blank'
-                    href="https://www.salzburg.gv.at/themen/statistik/ogd/">Land Salzburg Open Goverment Data </a></p>
+                    href="https://www.salzburg.gv.at/themen/statistik/ogd/">Land Salzburg Open Goverment Data</a></p>
         </h1>
         <p class="flag"><img src="images/flag.png" class="flag-img"></p>
     </div>
 
     <div id="map"></div>
-    <div class="legend"></div>
 </body>
 
 </html>
