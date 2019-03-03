@@ -103,13 +103,13 @@
         }
 
         .mountainbikestrecken {
-            border-top: 2px solid #000000;
-            border-bottom: 2px solid #000000;
+            border-top: 2px solid #7423E2;
+            border-bottom: 2px solid #7423E2;
         }
 
         .naturparke {
-            border-top: 2px solid #0B610B;
-            border-bottom: 2px solid #0B610B;
+            border-top: 2px solid #28B92A;
+            border-bottom: 2px solid #28B92A;
         }
 
         .seen {
@@ -237,10 +237,10 @@
             naturparke = new L.GeoJSON.AJAX('datos/naturparke.geojson', {
                 style: function (feature) {
                     return {
-                        "color": "#0B610B",
-                        "weight": 2,
+                        "color": "#000000",
+                        "weight": 1.5,
                         "opacity": 1,
-                        "fillOpacity": 0.5
+                        "fillOpacity": 0.2
                     };
                 },
                 onEachFeature: function (feature, layer) {
@@ -261,10 +261,10 @@
             seen = new L.GeoJSON.AJAX('datos/seen.geojson', {
                 style: function (feature) {
                     return {
-                        "color": "#0080FF",
-                        "weight": 2,
+                        "color": "#000000",
+                        "weight": 1.5,
                         "opacity": 1,
-                        "fillOpacity": 0.5
+                        "fillOpacity": 0.2
                     };
                 },
                 onEachFeature: function (feature, layer) {
