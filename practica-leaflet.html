@@ -161,7 +161,7 @@
                         "color": "#000000",
                         "weight": 3,
                         "opacity": 1,
-                        "fillOpacity": 0.1
+                        "fillOpacity": 0.2
                     };
                 },
             })
@@ -172,13 +172,18 @@
                         "color": "#000000",
                         "weight": 1,
                         "opacity": 1,
-                        "fillOpacity": 0
+                        "fillOpacity": 0.2
                     };
                 },
                 onEachFeature: function (feature, layer) {
                     popupContentPol = "<h2 class='gemeinden'> Gemeinden </h2>"
                         + "<p><strong>Name: </strong>" + feature.properties.NAME + "</p>"
                     layer.bindPopup(popupContentPol);
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight,
+                    
+                    });
                 },
 
             })
@@ -191,15 +196,18 @@
                         + "<p><strong>Name: </strong>" + feature.properties.NAME + "</p>"
                         + "<p><a target='_blank' href='" + feature.properties.DBLink + "'>Weitere Informationen</a></p>";
                     layer.bindPopup(popupContent);
-                  
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight,
+                    });
                 },
                 pointToLayer: function (feature, latlng) {
                     return L.circleMarker(latlng, {
                         radius: 7,
                         fillColor: "#FF8000",
-                        color: "#ffffff",
-                        weight: 1,
-                        opacity: 0.7,
+                        color: "#000000",
+                        weight: 1.5,
+                        opacity: 1,
                         fillOpacity: 1
                     });
                 }
@@ -213,15 +221,18 @@
                         + "<p><strong>Name: </strong>" + feature.properties.NAME + "</p>"
                         + "<p><a target='_blank' href='" + feature.properties.Link + "'>Weitere Informationen</a></p>";
                     layer.bindPopup(popupContent);
-               
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight,
+                    });
                 },
                 pointToLayer: function (feature, latlng) {
                     return L.circleMarker(latlng, {
                         radius: 7,
                         fillColor: "#FFFF00",
-                        color: "#ffffff",
-                        weight: 1,
-                        opacity: 0.7,
+                        color: "#000000",
+                        weight: 1.5,
+                        opacity: 1,
                         fillOpacity: 1
                     });
                 }
@@ -243,10 +254,16 @@
                         + "<p><a target='_blank' href='" + feature.properties.Link + "'>Weitere Informationen</a></p>";
 
                     layer.bindPopup(popupContentPol);
-                 
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight,
+                    
+                    });
                 },
 
             }).addTo(map);
+
+
 
             seen = new L.GeoJSON.AJAX('datos/seen.geojson', {
                 style: function (feature) {
@@ -257,12 +274,20 @@
                         "fillOpacity": 0.5
                     };
                 },
+
+                
+
+
+
                 onEachFeature: function (feature, layer) {
                     popupContentPol = "<h2 class='seen'> Seen </h2>"
                         + "<p><strong>Name: </strong>" + feature.properties.NAME + "</p>"
                         + "<p><a target='_blank' href='" + feature.properties.Link + "'>Weitere Informationen</a></p>";
                     layer.bindPopup(popupContentPol);
-                  
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight,
+                    });
                 },
 
             }).addTo(map);
@@ -274,18 +299,20 @@
                 return d == "Leicht" ? 'green' :
                     d == "Mittel" ? 'blue' :
                         d == "Schwer" ? 'red' :
-                            '#000000';
-            };
+                            '#000000';                   
+            } 
+
            
-            
+           
         
 
             function styleLines(feature) {
                 return {
                     color: getColor(feature.properties.Schwgrad),
-                    weight: 2,
+                    weight: 1.5,
                     opacity: 1,
                 }
+               
                 
                 
             };
@@ -297,7 +324,11 @@
                         + "<p><strong>Schwgrad: </strong>" + feature.properties.Schwgrad + "</p>"
                     layer.bindPopup(popupContentL);
                 };
-                
+                layer.on({
+                    mouseover: highlightFeature,
+                    mouseout: resetHighlight,
+         
+                });
             }            
 
 
@@ -308,8 +339,28 @@
             
             
 
-              
+            function highlightFeature(e) {
+                var highlight = e.target;
 
+                highlight.setStyle({
+                    weight: 5,
+                    color: '#666',
+                    dashArray: '',
+                    fillOpacity: 0.7
+                });
+            }
+
+            function resetHighlight(e) {
+                gemeinden.resetStyle(e.target);
+                burgenundschloesser.resetStyle(e.target);
+                museen.resetStyle(e.target);
+                naturparke.resetStyle(e.target);
+                seen.resetStyle(e.target);
+                mountainbikestrecken.resetStyle(e.target);
+
+            }
+
+          
 
 
             var baseMaps = {
